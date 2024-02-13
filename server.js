@@ -15,15 +15,15 @@ const app = express()
 const PORT = process.env.PORT || 3000
 
 cors({
-    origin: [
-        'http://localhost:5500',
-        'http://localhost:5500/',
-        'https://easy-bank-peach.vercel.app',
-        'https://easy-bank-peach.vercel.app/'
-    ],
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true,
-    optionsSuccessStatus: 204
+    // origin: [
+    //     'http://localhost:5500',
+    //     'http://localhost:5500/',
+    //     'http://127.0.0.1:5500/',
+    //     'https://easy-bank-peach.vercel.app',
+    //     'https://easy-bank-peach.vercel.app/'
+    // ]
+
+    origin: '*'
 })
 
 app.use(require('express-session')({ secret: 'secretpassphrase', resave: false, saveUninitialized: false }));
