@@ -17,7 +17,9 @@ const PORT = process.env.PORT || 3000
 cors({
     origin: [
         'http://localhost:5500',
-        'http://localhost:5500/'
+        'http://localhost:5500/',
+        'https://easy-bank-peach.vercel.app',
+        'https://easy-bank-peach.vercel.app/'
     ]
 })
 
