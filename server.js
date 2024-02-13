@@ -9,6 +9,7 @@ const config = require('./config/db')
 const bcrypt = require('bcrypt')
 const cors = require('cors')
 const { isValidName, isValidEmail, isValidPassword } = require('./db/validation')
+const methodOverride = require('method-override')
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -24,12 +25,20 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(bodyParser.json());
 app.use(flash())
+// app.use(methodOverride('_method'))
 
-app.get('/', (req, res) => {
-    res.send('backend overhere!')
+
+
+app.get('/', checkAuthenticated, (req, res) => {
+    // if (req.isAuthenticated()) {
+        // res.send('backend overhere!')
+    //     res.redirect('http://localhost:5500/indexu.html')
+    // } else {
+    //     res.redirect('http://localhost:5500/login.html')
+    // }
 })
 
-app.post('/create-account', async (req, res) => {
+app.post('/create-account', checkNotAuthenticated, async (req, res) => {
     try {
         const { userName, userEmail, userPassword } = req.body
 
@@ -48,10 +57,28 @@ app.post('/create-account', async (req, res) => {
     }
 })
 
-app.post('/login', passport.authenticate('local'), (req, res) => {
-    // Este trecho só será executado se a autenticação for bem-sucedida
+app.post('/login', checkNotAuthenticated,  passport.authenticate('local'), (req, res) => {
     res.json({ success: true, redirectUrl: 'http://localhost:5500/indexu.html' });
 });
+
+app.get('/login', checkNotAuthenticated, passport.authenticate('local'), (req, res) => {
+    res.redirect('http://localhost:5500/login.html')
+})
+
+app.get('/logout', (req, res) => {
+    req.logout((err) => {
+        if (err) {
+            console.error(err);
+            return next(err);
+        }
+        console.log('logged out')
+        res.redirect('http://localhost:5500')
+    })
+})
+
+app.get('/indexu', checkAuthenticated, (req, res) => {
+    res.redirect('http://localhost:5500/indexu.html')
+})
 
 passport.use(new LocalStrategy({
     usernameField: 'userEmail',
@@ -70,8 +97,7 @@ passport.use(new LocalStrategy({
 
         //testebruto
         if (isMatch && user) {
-            console.log('| TESTE BRUTO |')
-            console.log('autenticado')
+            console.log('Autenticação bem-sucedida');
         } else {
             console.log('nao autenticado')
         }
@@ -88,10 +114,12 @@ passport.use(new LocalStrategy({
 }))
 
 passport.serializeUser((user, done) => {
+    console.log('Serialize User:', user);
     done(null, user.id)
 })
 
 passport.deserializeUser(async (id, done) => {
+    console.log('Deserialize User:', id);
     try {
         const user = await UserModel.findById(id)
         done(null, user)
@@ -102,6 +130,34 @@ passport.deserializeUser(async (id, done) => {
 
 mongoose.connect(config.databaseConnectionString)
 
+function checkAuthenticated(req, res, next) {
+    console.log('Middleware checkAuthenticated chamado');
+
+    if (req.isAuthenticated()) {
+        console.log('Estado de autenticação:', req.isAuthenticated())
+        // res.redirect('http://localhost:5500/indexu.html')
+        return next()
+    } else {
+        res.redirect('http://localhost:5500/login.html')
+        console.log('Estado de autenticação:', req.isAuthenticated())
+        // next()
+    }
+}
+
+function checkNotAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        console.log('Estado de autenticação:', req.isAuthenticated())
+        return res.redirect('http://localhost:5500/indexu.html')
+    }
+
+    return next()
+}
+
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Erro interno do servidor');
+});
+
 app.listen(PORT, () => {
-    console.log(`server running at ${PORT}`)
+    console.log(`server running at http://localhost:${PORT}`)
 })
