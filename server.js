@@ -20,7 +20,10 @@ cors({
         'http://localhost:5500/',
         'https://easy-bank-peach.vercel.app',
         'https://easy-bank-peach.vercel.app/'
-    ]
+    ],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    optionsSuccessStatus: 204
 })
 
 app.use(require('express-session')({ secret: 'secretpassphrase', resave: false, saveUninitialized: false }));
