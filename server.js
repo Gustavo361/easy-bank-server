@@ -14,11 +14,12 @@ const methodOverride = require('method-override')
 const app = express()
 const PORT = process.env.PORT || 3000
 
-app.use(
-    cors({
-        origin: '*'
-    })
-)
+cors({
+    origin: [
+        'http://localhost:5500',
+        'http://localhost:5500/'
+    ]
+})
 
 app.use(require('express-session')({ secret: 'secretpassphrase', resave: false, saveUninitialized: false }));
 app.use(passport.initialize())
@@ -31,7 +32,7 @@ app.use(flash())
 
 app.get('/', checkAuthenticated, (req, res) => {
     // if (req.isAuthenticated()) {
-        // res.send('backend overhere!')
+    // res.send('backend overhere!')
     //     res.redirect('http://localhost:5500/indexu.html')
     // } else {
     //     res.redirect('http://localhost:5500/login.html')
@@ -57,7 +58,7 @@ app.post('/create-account', checkNotAuthenticated, async (req, res) => {
     }
 })
 
-app.post('/login', checkNotAuthenticated,  passport.authenticate('local'), (req, res) => {
+app.post('/login', checkNotAuthenticated, passport.authenticate('local'), (req, res) => {
     res.json({ success: true, redirectUrl: 'http://localhost:5500/indexu.html' });
 });
 
