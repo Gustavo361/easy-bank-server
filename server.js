@@ -16,6 +16,7 @@ const app = express()
 const PORT = process.env.PORT || 3000
 
 app.use(cors({origin: [
+    'https://easy-bank-ui.onrender.com/',
     'https://easy-bank-peach.vercel.app',
     'https://easy-bank-peach.vercel.app/',
     'http://127.0.0.1:5500/',
