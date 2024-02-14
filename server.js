@@ -17,6 +17,7 @@ const PORT = process.env.PORT || 3000
 
 app.use(cors({origin: [
     'https://easy-bank-ui.onrender.com/',
+    'https://easy-bank-ui.onrender.com',
     'https://easy-bank-peach.vercel.app',
     'https://easy-bank-peach.vercel.app/',
     'http://127.0.0.1:5500/',
@@ -34,7 +35,7 @@ app.use(flash())
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-    res.redirect('https://easy-bank-peach.vercel.app')
+    res.redirect('https://easy-bank-ui.onrender.com')
 })
 
 app.get('/create-account', (req, res) => {
