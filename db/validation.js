@@ -1,17 +1,34 @@
 function isValidName(name) {
-    const nameRegex = /^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/;
-    return nameRegex.test(name);
+    const nameRegex = /^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/
+    const errors = {}
+
+    if (!nameRegex.test(name)) {
+        errors.userName = 'O nome deve conter apenas letras e espaços.'
+    }
+
+    return errors
 }
 
 function isValidEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const errors = {}
+
+    if (!emailRegex.test(email)) {
+        errors.userEmail = 'Por favor, insira um e-mail válido.'
+    }
+
+    return errors
 }
 
 function isValidPassword(password) {
-    // A senha deve ter pelo menos 8 caracteres e incluir pelo menos uma letra e um número
-    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
-    return passwordRegex.test(password);
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/
+    const errors = {}
+
+    if (!passwordRegex.test(password)) {
+        errors.userPassword = 'A senha deve ter pelo menos 8 caracteres e incluir pelo menos uma letra e um número.'
+    }
+
+    return errors
 }
 
-module.exports = { isValidName, isValidEmail, isValidPassword };
+module.exports = { isValidName, isValidEmail, isValidPassword }
