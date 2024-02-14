@@ -15,7 +15,13 @@ const methodOverride = require('method-override')
 const app = express()
 const PORT = process.env.PORT || 3000
 
-app.use(cors({ origin: 'http://127.0.0.1:5500' }))
+app.use(cors({
+    origin:
+        [
+            'http://127.0.0.1:5500',
+            'https://easy-bank-peach.vercel.app'
+        ]
+}))
 
 app.use(require('express-session')({ secret: 'secretpassphrase', resave: false, saveUninitialized: false }));
 app.use(passport.initialize())
@@ -25,7 +31,7 @@ app.use(flash())
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-    res.redirect('http://127.0.0.1:5500/')
+    res.redirect('https://easy-bank-peach.vercel.app')
 })
 
 app.get('/create-account', (req, res) => {
