@@ -31,7 +31,7 @@ app.get('/', checkAuthentication, (req, res) => {
 })
 
 app.get('/create-account', checkAuthentication, (req, res) => {
-    res.redirect('http://127.0.0.1:5500/create-account.html')
+    res.redirect('https://easy-bank-ui.onrender.com/create-account.html')
 })
 
 app.post('/create-account', createAccount)
@@ -40,6 +40,10 @@ app.post('/login', loginAccount)
 
 app.get('/login', (req, res) => {
     res.redirect('https://easy-bank-ui.onrender.com/login')
+})
+
+app.get('/initial', (req, res) => {
+    res.redirect('https://easy-bank-ui.onrender.com/initial.html')
 })
 
 app.get('/test', (req, res) => {
@@ -61,7 +65,7 @@ app.get('/logout', (req, res) => {
         if (err) {
             return res.status(500).json({ error: 'Erro ao fazer logout.' })
         }
-        res.redirect('http://localhost:5500/')
+        res.redirect('https://easy-bank-ui.onrender.com/')
     })
 })
 

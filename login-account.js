@@ -16,7 +16,7 @@ async function loginUser(req, res, next) {
                 return next(err)
             }
             console.log('user logged')
-            res.json({ ok: true, message: 'Login bem-sucedido!', redirectRoute: 'https://easy-bank-ui.onrender.com/login' })
+            res.json({ ok: true, message: 'Login bem-sucedido!', redirectRoute: 'https://easy-bank-ui.onrender.com/initial' })
         })
     })(req, res, next)
 }
