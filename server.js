@@ -15,8 +15,8 @@ const methodOverride = require('method-override')
 const app = express()
 const PORT = process.env.PORT || 3000
 
-// app.use(cors({origin: process.env.CORS_ORIGIN}))
-app.use(cors({origin: '*'}))
+app.use(cors({origin: process.env.CORS_ORIGIN}))
+// app.use(cors({origin: '*'}))
 
 app.use(require('express-session')({ secret: 'secretpassphrase', resave: false, saveUninitialized: false }));
 app.use(passport.initialize())
