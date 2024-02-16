@@ -38,6 +38,10 @@ app.post('/create-account', createAccount)
 
 app.post('/login', loginAccount)
 
+app.get('/login', (req, res) => {
+    res.redirect('https://easy-bank-ui.onrender.com/login')
+})
+
 app.get('/test', (req, res) => {
     res.send('backend here!')
 })
