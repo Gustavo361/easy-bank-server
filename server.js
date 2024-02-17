@@ -15,7 +15,7 @@ const checkAuthentication = require('./checkAuth')
 const app = express()
 const PORT = process.env.PORT || 3000
 
-app.use(cors({origin: process.env.CORS_ORIGIN}))
+app.use(cors({ origin: process.env.CORS_ORIGIN }))
 // app.use(cors({ origin: '*' }))
 
 app.use(require('express-session')({ secret: 'secretpassphrase', resave: false, saveUninitialized: false }))
@@ -44,6 +44,22 @@ app.get('/login', (req, res) => {
 
 app.get('/initial', (req, res) => {
     res.redirect('https://easy-bank-ui.onrender.com/initial.html')
+})
+
+app.post('/initial', checkAuthentication, async (req, res) => {
+    try {
+        const user = await UserModel.findById(req.session.passport.user);
+
+        if (!user) {
+            return res.status(401).json({ message: 'Usuário não encontrado' });
+        }
+
+        // Enviar dados do usuário como JSON para o frontend
+        res.json({ userName: user.userName });
+    } catch (error) {
+        console.error('Erro ao buscar usuário no MongoDB Atlas:', error);
+        res.status(500).json({ error: 'Erro ao buscar usuário' });
+    }
 })
 
 app.get('/test', (req, res) => {
