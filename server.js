@@ -48,17 +48,17 @@ app.get('/initial', (req, res) => {
 
 app.post('/initial', checkAuthentication, async (req, res) => {
     try {
-        const user = await UserModel.findById(req.session.passport.user);
+        const user = await UserModel.findById(req.session.passport.user)
 
         if (!user) {
-            return res.status(401).json({ message: 'Usuário não encontrado' });
+            return res.status(401).json({ message: 'Usuário não encontrado' })
         }
 
         // Enviar dados do usuário como JSON para o frontend
-        res.json({ userName: user.userName });
+        res.json({ userName: user.userName })
     } catch (error) {
-        console.error('Erro ao buscar usuário no MongoDB Atlas:', error);
-        res.status(500).json({ error: 'Erro ao buscar usuário' });
+        console.error('Erro ao buscar usuário no MongoDB Atlas:', error)
+        res.status(500).json({ error: 'Erro ao buscar usuário' })
     }
 })
 
@@ -77,11 +77,11 @@ passport.deserializeUser(function (id, done) {
 })
 
 app.get('/logout', isAuthenticated, (req, res) => {
-    req.logout();
+    req.logout()
     // Adicione qualquer lógica adicional de limpeza de sessão ou usuário
 
     // Responda à solicitação Fetch com sucesso
-    return res.status(200).json({ message: 'Logout bem-sucedido.', redirectRoute: 'https://easy-bank-ui.onrender.com'});
+    return res.status(200).json({ message: 'Logout bem-sucedido.', redirectRoute: 'https://easy-bank-ui.onrender.com'})
 
 })
 
