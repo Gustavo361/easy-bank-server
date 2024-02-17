@@ -77,12 +77,16 @@ passport.deserializeUser(function (id, done) {
 })
 
 app.get('/logout', (req, res) => {
-    req.logout(function (err) {
-        if (err) {
-            return res.status(500).json({ error: 'Erro ao fazer logout.' })
-        }
-        res.redirect('https://easy-bank-ui.onrender.com/')
-    })
+    if (req.query.logout === 'true') {
+        req.logout(function (err) {
+            if (err) {
+                return res.status(500).json({ error: 'Erro ao fazer logout.' })
+            }
+            return res.redirect('https://easy-bank-ui.onrender.com/');
+        });
+    } else {
+        return res.status(400).json({ error: 'Parâmetro de logout ausente.' });
+    }
 })
 
 mongoose.connect(dbconfig.databaseConnectionString)
