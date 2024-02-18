@@ -77,7 +77,7 @@ passport.deserializeUser(function (id, done) {
 })
 
 app.get('/logout', (req, res) => {
-    req.logout()
+    // req.logout()
     res.redirect('https://easy-bank-ui.onrender.com/')
 });
 
