@@ -78,7 +78,7 @@ passport.deserializeUser(function (id, done) {
 
 app.post('/logout', (req, res) => {
     req.logout()
-    res.rediect('https://easy-bank-ui.onrender.com/')
+    res.redirect('https://easy-bank-ui.onrender.com/')
 });
 
 mongoose.connect(dbconfig.databaseConnectionString)
