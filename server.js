@@ -11,6 +11,7 @@ const createAccount = require('./create-account')
 const loginAccount = require('./login-account')
 const localStrategy = require('./localStrategy')
 const checkAuthentication = require('./checkAuth')
+const methodOverride = require('method-override')
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -24,6 +25,7 @@ app.use(passport.session())
 app.use(bodyParser.json())
 app.use(flash())
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(methodOverride('_method'))
 passport.use(localStrategy)
 
 app.get('/', checkAuthentication, (req, res) => {
