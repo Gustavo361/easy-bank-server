@@ -5,7 +5,7 @@ function checkAuthentication(req, res, next) {
         const requestedRoute = req.path
 
         if (requestedRoute === '/login' || requestedRoute === '/create-account') {
-            res.redirect('/initial')
+            res.redirect('https://easy-bank-ui.onrender.com/initial')
         } else {
             next();
         }
@@ -13,7 +13,7 @@ function checkAuthentication(req, res, next) {
         const requestedRoute = req.path
 
         if (requestedRoute === '/initial') {
-            res.redirect('/login')
+            res.redirect('https://easy-bank-ui.onrender.com/login')
         } else {
             next()
         }

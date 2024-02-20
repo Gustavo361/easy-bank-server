@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema({
         unique: false,
         validate: {
             validator: isValidPassword,
-            message: 'A senha deve ter pelo menos 8 caracteres e incluir pelo menos uma letra e um número'
+            message: 'Senha: Mínimo de 8 caracteres, com pelo menos 1 letra e 1 número.'
         }
     }
 })

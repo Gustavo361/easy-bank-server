@@ -25,7 +25,7 @@ function isValidPassword(password) {
     const errors = {}
 
     if (!passwordRegex.test(password)) {
-        errors.userPassword = 'A senha deve ter pelo menos 8 caracteres e incluir pelo menos uma letra e um número.'
+        errors.userPassword = 'Senha: Mínimo de 8 caracteres, com ao menos 1 letra e 1 número.'
     }
 
     return errors

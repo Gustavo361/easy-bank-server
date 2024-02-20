@@ -19,7 +19,11 @@ const PORT = process.env.PORT || 3000
 app.use(cors({ origin: process.env.CORS_ORIGIN }))
 // app.use(cors({ origin: '*' }))
 
-app.use(require('express-session')({ secret: 'secretpassphrase', resave: false, saveUninitialized: false }))
+app.use(require('express-session')({
+    secret: 'secretpassphrase',
+    resave: false,
+    saveUninitialized: false
+}))
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(bodyParser.json())
@@ -55,8 +59,6 @@ app.post('/initial', checkAuthentication, async (req, res) => {
         if (!user) {
             return res.status(401).json({ message: 'Usuário não encontrado' })
         }
-
-        // Enviar dados do usuário como JSON para o frontend
         res.json({ userName: user.userName })
     } catch (error) {
         console.error('Erro ao buscar usuário no MongoDB Atlas:', error)
@@ -81,11 +83,11 @@ passport.deserializeUser(function (id, done) {
 app.get('/logout', (req, res) => {
     req.logout((err) => {
         if (err) {
-            return next(err);
+            return next(err)
         }
-        res.redirect('https://easy-bank-ui.onrender.com');
-    });
-});
+        res.redirect('https://easy-bank-ui.onrender.com')
+    })
+})
 
 mongoose.connect(dbconfig.databaseConnectionString)
 
