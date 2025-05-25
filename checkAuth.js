@@ -13,3 +13,6 @@ function checkAuthentication(req, res, next) {
         return next();
     }
 }
+
+module.exports = checkAuthentication
+
