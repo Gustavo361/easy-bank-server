@@ -28,10 +28,10 @@ async function createAccount(req, res) {
     try {
         await newUser.save()
         console.log('User creation status: User created successfully.')
-        res.json({ ok: true, message: 'Usuário cadastrado com sucesso!', userName: userName,
-            
-            redirectRoute: 'http://localhost:5500/EasyBank-landing-page/initial.html' })
-            // redirectRoute: 'https://easy-bank-ui.onrender.com/initial.html' })
+        res.json({
+            ok: true, message: 'Usuário cadastrado com sucesso!', userName: userName,
+            redirectRoute: 'https://easy-bank-ui.onrender.com/initial.html'
+        })
     } catch (error) {
         console.log('User creation status: User created unsuccessfully.', error)
         res.status(500).json({ error: 'Internal server error.' })
