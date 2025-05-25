@@ -17,8 +17,8 @@ require('dotenv').config()
 const app = express()
 const PORT = process.env.PORT || 3000
 
-app.use(cors({ origin: process.env.CORS_ORIGIN, credentials: true }))
-// app.use(cors({ origin: '*' }))
+// app.use(cors({ origin: process.env.CORS_ORIGIN, credentials: true }))
+app.use(cors({ origin: '*', credentials: true }))
 
 app.use(require('express-session')({
     secret: 'secretpassphrase',
