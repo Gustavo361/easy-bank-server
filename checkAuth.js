@@ -1,23 +1,15 @@
-
-
 function checkAuthentication(req, res, next) {
     if (req.isAuthenticated()) {
-        const requestedRoute = req.path
-
-        if (requestedRoute === '/login' || requestedRoute === '/create-account') {
-            res.redirect('https://easy-bank-ui.onrender.com/initial')
-        } else {
-            next();
+        // Se autenticado e tentando acessar login/cadastro, redireciona
+        if (req.path === '/login' || req.path === '/create-account') {
+            return res.redirect('https://easy-bank-ui.onrender.com/initial');
         }
+        return next();
     } else {
-        const requestedRoute = req.path
-
-        if (requestedRoute === '/initial') {
-            res.redirect('https://easy-bank-ui.onrender.com/login')
-        } else {
-            next()
+        // Se NÃO autenticado e tentando acessar rotas protegidas
+        if (req.path === '/' || req.path === '/initial' || req.path === '/create-account') {
+            return res.redirect('https://easy-bank-ui.onrender.com/login');
         }
+        return next();
     }
 }
-
-module.exports = checkAuthentication

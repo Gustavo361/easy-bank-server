@@ -17,13 +17,17 @@ require('dotenv').config()
 const app = express()
 const PORT = process.env.PORT || 3000
 
-// app.use(cors({ origin: process.env.CORS_ORIGIN }))
-app.use(cors({ origin: '*' }))
+app.use(cors({ origin: process.env.CORS_ORIGIN, credentials: true }))
+// app.use(cors({ origin: '*' }))
 
 app.use(require('express-session')({
     secret: 'secretpassphrase',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: {
+        secure: true,
+        sameSite: 'none'
+    }
 }))
 app.use(passport.initialize())
 app.use(passport.session())
@@ -49,7 +53,7 @@ app.get('/login', (req, res) => {
     res.redirect('https://easy-bank-ui.onrender.com/login')
 })
 
-app.get('/initial', (req, res) => {
+app.get('/initial', checkAuthentication, (req, res) => {
     res.redirect('https://easy-bank-ui.onrender.com/initial.html')
 })
 
@@ -82,10 +86,10 @@ passport.deserializeUser(function (id, done) {
 })
 
 app.get('/logout', (req, res) => {
-  req.logout(err => {
-    if (err) return next(err)
-    res.json({ ok: true, redirectUrl: 'https://easy-bank-ui.onrender.com' })
-  })
+    req.logout(err => {
+        if (err) return next(err)
+        res.json({ ok: true, redirectUrl: 'https://easy-bank-ui.onrender.com' })
+    })
 })
 
 mongoose.connect(dbconfig.databaseConnectionString)
